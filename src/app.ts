@@ -1,6 +1,7 @@
 import { execFile } from 'child_process'
 import express from 'express';
 import path from 'path';
+import https from 'https';
 
 const app = express();
 const port = 3000;
@@ -16,21 +17,38 @@ app.get('/', (req, res) => {
   const tempFile = path.join(__dirname, '../temp/downloaded.glb');
   const outputFile = path.join(__dirname, '../temp/output.glb');
 
-  const url = req.query.url as string;
+  var url = req.query.url as string;
+  console.log("LOG:" + url);
 
-  execFile(scriptPath, [url, tempFile, outputFile], (error, stdout, stderr) => {
-    if (error) {
-      console.error('🚨 Error:', error);
-      return;
-    }
-    if (stderr) {
-      console.error('⚠️ stderr:', stderr);
-    }
-    console.log('✅ stdout:', stdout);
+  https.get(url, (response) => {
+    let body = '';
+
+    response.on('data', (chunk) => body += chunk);
+    response.on('end', () => {
+      const match = body.match(/https:\/\/[^\s"']+\.glb/g);
+      if (match?.[0]) {
+        url = match[0];
+        console.log(url);
+        execFile(scriptPath, [url, tempFile, outputFile], (error, stdout, stderr) => {
+          if (error) {
+            console.error('🚨 Error:', error);
+            return;
+          }
+          if (stderr) {
+            console.error('⚠️ stderr:', stderr);
+          }
+          console.log('✅ stdout:', stdout);
+          res.setHeader('Content-Disposition', 'attachment; filename="model.glb"');
+          res.sendFile(outputFile);
+        });
+      } else {
+        res.status(404).send('No .glb found'); 
+      }
+    });
+  }).on('error', (err) => {
+    res.status(500).send('Request error: ' + err.message);
   });
-    res.setHeader('Content-Disposition', 'attachment; filename="model.glb"');
-    res.sendFile(outputFile);
-  });
+});
 
 app.listen(port, err => {
   if (err) {
@@ -38,3 +56,5 @@ app.listen(port, err => {
   }
   return console.log(`server is listening on ${port}`);
 });
+
+

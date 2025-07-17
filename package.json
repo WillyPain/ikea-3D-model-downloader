@@ -4,7 +4,8 @@
   "description:": "Takes a link to an Ikea furniture listing and downloads the glb + decompresses the draco compression",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js"
+    "start": "tsc && node dist/app.js",
+    "build": "tsc"
   },
   "author": "WillyPain",
   "dependencies": {
@@ -15,6 +16,6 @@
   "devDependencies": {
     "@types/express": "^5.0.3",
     "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
+    "typescript": "^5.8.3"
   }
 }

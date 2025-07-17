@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Download Form</title>
+  <style>
+    body {
+      background: #1e1e2f;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    form {
+      background: #2e2e4d;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #5a5a8f88;
+      display: flex;
+      gap: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline-offset: 2px;
+      outline-color: #7777ff;
+    }
+    button {
+      background: #6655ff;
+      border: none;
+      border-radius: 8px;
+      padding: 0 1.5rem;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #5544dd;
+    }
+  </style>
+</head>
+<body>
+    <form id="downloadForm">
+    <input type="text" id="downloadLink" placeholder="Paste URL" required />
+    <button type="submit">Download</button>
+    </form>
+
+    <script>
+    document.getElementById('downloadForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // prevent page reload
+
+        const url = document.getElementById('downloadLink').value;
+        // Create an invisible link and trigger click to start download
+        const a = document.createElement('a');
+        a.href = '/?url=' + encodeURIComponent(url);
+        a.download = ''; // this hints browser to download
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    });
+    </script>
+</body>
+</html>
+

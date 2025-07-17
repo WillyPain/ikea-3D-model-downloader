@@ -5,7 +5,8 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "build": "tsc && cp src/form.html dist/form.html"
+    "build": "tsc && cp src/form.html dist/form.html",
+    "dev": "cp src/form.html dist/form.html && concurrently \"tsc --watch\" \"nodemon dist/app.js\""
   },
   "author": "WillyPain",
   "dependencies": {
@@ -19,7 +20,9 @@
     "@types/express": "^5.0.3",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
+    "concurrently": "^9.2.0",
     "eslint": "^9.31.0",
+    "nodemon": "^3.1.10",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"
   }

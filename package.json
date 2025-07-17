@@ -1,0 +1,20 @@
+{
+  "name": "ikea-3d-model-downloader",
+  "version": "0.0.0",
+  "description:": "Takes a link to an Ikea furniture listing and downloads the glb + decompresses the draco compression",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js"
+  },
+  "author": "WillyPain",
+  "dependencies": {
+    "@gltf-transform/core": "^4.2.0",
+    "@gltf-transform/extensions": "^4.2.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  }
+}

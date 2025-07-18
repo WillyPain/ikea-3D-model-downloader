@@ -17,8 +17,9 @@ app.get('/', (req, res) => {
   const tempFile = path.join(__dirname, '../temp/downloaded.glb');
   const outputFile = path.join(__dirname, '../temp/output.glb');
 
+
   var url = req.query.url as string;
-  console.log("LOG:" + url);
+  const filename = url.match(/[^/]+(?=\/?$)/) + ".glb";
 
   https.get(url, (response) => {
     let body = '';
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
             console.error('⚠️ stderr:', stderr);
           }
           console.log('✅ stdout:', stdout);
-          res.setHeader('Content-Disposition', 'attachment; filename="model.glb"');
+          res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
           res.sendFile(outputFile);
         });
       } else {
